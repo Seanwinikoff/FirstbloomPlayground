@@ -160,14 +160,12 @@ where customer_name ='Sean Winikoff'
 
 ----------------------------------------------------------------------------------------------------
 --look through the reviews as a way to gauge popularity in flavour profiles across coffees 
-with top_ratings as (
-	select fbupr.rating, fbupr.product_id, p.product_name 
-	from first_bloom_user_product_reviews fbupr 
-	join products p on fbupr.product_id = p.id 
-	order by rating desc
-	)
-select 
+--with top_ratings as (
+	--select fbupr.rating, fbupr.product_id, p.product_name 
+	--from first_bloom_user_product_reviews fbupr 
+	--join products p on fbupr.product_id = p.id 
+	--order by rating desc
+	--)
+--select 
 
 ----------------------------------------------------------------------------------------------------
---heat map of coffe product. regions/ heatmap for flavour profiles 
---comparing producing regions with their top flavor profiles
