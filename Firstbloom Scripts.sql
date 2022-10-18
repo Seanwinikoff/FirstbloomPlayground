@@ -63,6 +63,24 @@ where cpptc.tasting_note_id in (select cpptc.tasting_note_id from top_taste_cate
 order by cpptc.product_id  desc  
 limit 10
 
+----------------------------------------------------------------------------------------------------
+--heat map of coffee product. regions/ heatmap for flavour profiles 
+--comparing producing regions with their top flavor profiles	
+with top_tasting_notes as (
+		select sum(cppsltb.count), cppsltb.tasting_note_id, tasting_notes."name" 
+		from compiled_country_second_level_taste_breakdowns cppsltb  
+		join tasting_notes on cppsltb.tasting_note_id = tasting_notes.id 
+		group by cppsltb.tasting_note_id, tasting_notes."name"  
+		order by sum desc
+		)
+select ccsltb.tasting_note_id, tn.name as varietal, sum(ccsltb.count),  ccsltb.country_id, co.name as country  
+from compiled_country_second_level_taste_breakdowns ccsltb 
+join countries co on ccsltb.country_id = co.id
+join tasting_notes tn on ccsltb.tasting_note_id = tn.id  
+where ccsltb.tasting_note_id in (select ccsltb.tasting_note_id from top_tasting_notes)
+group by ccsltb.tasting_note_id,ccsltb.country_id, co."name", tn."name"  
+order by country asc 
+
 --------------------------------------------------------------------------------------------------------
 --find each region/country's best varietals
 -- select count of times a varietal comes up in a region (use its id), varietal name  
